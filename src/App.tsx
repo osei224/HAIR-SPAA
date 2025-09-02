@@ -9,13 +9,7 @@ import Testimonials from "./components/Testimonials";
 import Access from "./components/Access";
 import Footer from "./components/Footer";
 
-const salon = {
-  name: "HAIR & SPA Lumière",
-  address: "大阪市〇〇区〇〇 1-2-3 ルミエールビル2F",
-  tel: "06-1234-5678",
-  hours: "10:00-20:00（最終受付19:00）",
-  // mapUrl: "https://www.google.com/maps/embed?pb=...", // あれば入れる
-};
+import { salon } from "./salonData"; // ← サロン情報をインポート
 
 export default function App() {
   return (
@@ -26,7 +20,7 @@ export default function App() {
       <Menu />
       <Pricing />
       <Testimonials />
-      <Access salon={salon} />
+      <Access salon={salon} />   {/* ← salonデータを渡す */}
       <Footer />
     </main>
   );
