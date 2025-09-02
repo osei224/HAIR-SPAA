@@ -1,44 +1,45 @@
 // src/components/Access.tsx
 import React from "react";
 
-type Salon = {
-  name?: string;
-  address?: string;
-  mapUrl?: string;
-  phone?: string;
-  hours?: string;
+type SalonData = {
+  name: string;
+  address: string;
+  tel: string;
+  hours: string;
+  mapUrl: string;
 };
 
-export default function Access({ salon }: { salon: Salon }) {
-  // 値が無くても落ちないようにガード
-  const { name, address, mapUrl, phone, hours } = salon || {};
+export default function Access(props: { data?: Partial<SalonData> }) {
+  // props.data が無くても既定値で表示できるようにする
+  const data: SalonData = {
+    name: props.data?.name ?? "HAIR & SPA Lumière",
+    address: props.data?.address ?? "大阪市〇〇区〇〇 1-2-3 ルミエールビル2F",
+    tel: props.data?.tel ?? "06-1234-5678",
+    hours: props.data?.hours ?? "10:00-20:00（最終受付19:00）",
+    mapUrl:
+      props.data?.mapUrl ??
+      "https://www.google.com/maps?output=embed&q=Osaka",
+  };
 
   return (
-    <section className="container mx-auto px-4 py-12">
+    <section className="wrap my-12">
       <h2 className="text-2xl font-bold mb-4">アクセス</h2>
+      <p>店名：{data.name}</p>
+      <p>住所：{data.address}</p>
+      <p>TEL：{data.tel}</p>
+      <p>営業時間：{data.hours}</p>
 
-      {name && <p className="mb-2">店名：{name}</p>}
-      {address && <p className="mb-2">住所：{address}</p>}
-      {phone && <p className="mb-2">TEL：{phone}</p>}
-      {hours && <p className="mb-6">営業時間：{hours}</p>}
-
-      {/* mapUrl があれば地図を出す。無ければ何も出さない */}
-      {mapUrl ? (
-        <div className="aspect-video w-full overflow-hidden rounded-xl">
-          <iframe
-            src={mapUrl}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-            title="Google Map"
-          />
-        </div>
-      ) : (
-        <p className="text-sm text-gray-500">地図は準備中です。</p>
-      )}
+      <div className="mt-4 rounded-2xl overflow-hidden border border-gray-200">
+        <iframe
+          title="map"
+          src={data.mapUrl}
+          width="100%"
+          height="450"
+          loading="lazy"
+          style={{ border: 0 }}
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
     </section>
   );
 }
